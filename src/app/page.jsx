@@ -34,11 +34,11 @@ export default function Home() {
 
             <form className="w-100 mt-3">
               <label htmlFor="fullname" className="form-label text-light">
-                Full Name
+                Nom et prénom
               </label>
               <input
                 type="text"
-                placeholder="fullname"
+                placeholder="Nom et prénom"
                 name="fullname"
                 id="amount"
                 className="form-control mb-3 text-info"
