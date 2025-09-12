@@ -31,10 +31,10 @@ export default function Home() {
             <p className="text-light border-5 border-start border-light ps-3">
               ❤️ Donnez mensuellement
             </p>
-            <p>5 400,00 USD</p>
-            <p>Mhmd Mhmd</p>
+            <p className="text-light">5 400,00 USD</p>
+            <p className="text-light">Mhmd Mhmd</p>
              <br/>
-            <hr/>
+            <hr className="w-50 border border-light border-1"/>
             <br/>
             <form className="w-100 mt-3">
 
