@@ -1,10 +1,11 @@
+"use client";
+
 import React from 'react'
 import Image from "next/image";
 
 const Footer = () => {
   return (
     <footer className="bg-dark text-white text-center py-5 mt-5">
-      {/* Logo */}
       <div className="mb-3">
         <Image
           src="/footer-logo.png"
@@ -15,10 +16,8 @@ const Footer = () => {
         />
       </div>
 
-      {/* CopyRight */}
       <p className="mb-4">© UNRWA 2025</p>
 
-      {/* Links */}
       <div className="d-flex flex-wrap justify-content-center gap-3">
         <a className="text-white text-decoration-none small fw-light footer-link" href="#">
           Zakat Impact Report
@@ -37,11 +36,10 @@ const Footer = () => {
         </a>
       </div>
 
-      {/* Extra style for hover */}
       <style jsx>{`
         .footer-link:hover {
           text-decoration: underline;
-          color: #0dcaf0; /* Bootstrap info color */
+          color: #0dcaf0;
         }
       `}</style>
     </footer>
