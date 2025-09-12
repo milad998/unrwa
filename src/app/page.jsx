@@ -25,6 +25,7 @@ export default function Home() {
 
         {/* Deuxième carte */}
         <div className="col-12 col-lg-6">
+          
           <div className="card text-bg-info h-100 d-flex flex-column justify-content-start align-items-start p-4 shadow border-0">
             <h1 className="text-light">Faites la différence aujourd’hui</h1>
             <p className="text-light border-5 border-start border-light ps-3">
@@ -32,6 +33,16 @@ export default function Home() {
             </p>
 
             <form className="w-100 mt-3">
+              <label htmlFor="fullname" className="form-label text-light">
+                Full Name
+              </label>
+              <input
+                type="text"
+                placeholder="fullname"
+                name="fullname"
+                id="amount"
+                className="form-control mb-3 text-info"
+              />
               <label htmlFor="amount" className="form-label text-light">
                 Ou choisissez votre propre montant [EUR]
               </label>
