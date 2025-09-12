@@ -160,7 +160,7 @@ export default function Home() {
           ].map((card, idx) => (
             <div key={idx} className="card my-4 bg-info text-white border-0 shadow overflow-hidden">
               <div className="ratio ratio-16x9">
-                <Image src={card.src} alt={card.title} fill style={{ objectFit: "cover" }} />
+                <Image src={card.src} alt={card.title} fill style={{ objectFit: "cover" }}  className="bg-dark bg-opacity-50"/>
               </div>
               <div className="card-body">
                 <h5 className="card-title fw-bold">{card.title}</h5>
