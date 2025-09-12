@@ -3,22 +3,48 @@ import Image from "next/image";
 
 const Footer = () => {
   return (
-    <div className='text-center p-5 bg-dark text-white'>
-            <Image
-                src="/footer-logo.png"
-                alt="..."
-                width={50}
-                height={70}
-                    />
-        <p className='my-3'>© UNRWA 2025</p>
-        <div className="d-flex justify-content-center align-items-center " style={{fontSize: '9px'}}>
-            <a className="nav-link active mx-3" aria-current="page" href="#">Zakat Impact Report</a>
-            <a className="nav-link mx-1" href="#">FAQs</a>
-            <a className="nav-link mx-1" href="#">My Account</a>
-            <a className="nav-link disabled mx-1" aria-disabled="true">Privacy Policy</a>
-            <a className="nav-link mx-1" href="#">Contact Us BankTransfers</a>
+    <footer className="bg-dark text-white text-center py-5 mt-5">
+      {/* Logo */}
+      <div className="mb-3">
+        <Image
+          src="/footer-logo.png"
+          alt="UNRWA Logo"
+          width={60}
+          height={80}
+          priority
+        />
       </div>
-    </div>
+
+      {/* CopyRight */}
+      <p className="mb-4">© UNRWA 2025</p>
+
+      {/* Links */}
+      <div className="d-flex flex-wrap justify-content-center gap-3">
+        <a className="text-white text-decoration-none small fw-light footer-link" href="#">
+          Zakat Impact Report
+        </a>
+        <a className="text-white text-decoration-none small fw-light footer-link" href="#">
+          FAQs
+        </a>
+        <a className="text-white text-decoration-none small fw-light footer-link" href="#">
+          My Account
+        </a>
+        <a className="text-secondary text-decoration-none small fw-light" aria-disabled="true">
+          Privacy Policy
+        </a>
+        <a className="text-white text-decoration-none small fw-light footer-link" href="#">
+          Contact Us Bank Transfers
+        </a>
+      </div>
+
+      {/* Extra style for hover */}
+      <style jsx>{`
+        .footer-link:hover {
+          text-decoration: underline;
+          color: #0dcaf0; /* Bootstrap info color */
+        }
+      `}</style>
+    </footer>
   )
 }
 
