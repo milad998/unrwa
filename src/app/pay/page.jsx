@@ -34,7 +34,7 @@ export default function Home() {
             <p className="text-light">5 400,00 USD</p>
             <p className="text-light">Mhmd Mhmd</p>
              <br/>
-            <hr className="w-50 border border-light border-1"/>
+            <hr class="border border-light border-1 mx-auto" />
             <br/>
             <form className="w-100 mt-3">
 
