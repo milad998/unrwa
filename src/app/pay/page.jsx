@@ -39,7 +39,7 @@ export default function Home() {
             <form className="w-100 mt-3">
 
               <button type="submit" className="btn btn-light w-100 fw-bold">
-                Faire un don maintenant
+                <Image src="/6.svg" alt="..." width={60} height={60} />
               </button>
             </form>
           </div>
