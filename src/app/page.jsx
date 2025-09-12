@@ -2,20 +2,21 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="container  bg-light">
+    <div className="container bg-light py-5">
       <div className="row g-4">
         {/* Première carte */}
         <div className="col-12 col-lg-6">
-          <div className="card text-bg-dark h-100">
-            <Image
-              src="/one.webp"
-              className="card-img"
-              alt="Soutenir les réfugiés palestiniens"
-              width={400}
-              
-            />
-            <div className="card-img-overlay d-flex align-items-center">
-              <h1 className="card-text fw-bold">
+          <div className="card text-bg-dark h-100 border-0 shadow overflow-hidden">
+            <div className="ratio ratio-16x9">
+              <Image
+                src="/one.webp"
+                alt="Soutenir les réfugiés palestiniens"
+                fill
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+            <div className="card-img-overlay d-flex align-items-center bg-dark bg-opacity-50">
+              <h1 className="card-text fw-bold text-white">
                 Donnez aujourd’hui pour soutenir les réfugiés palestiniens
               </h1>
             </div>
@@ -24,7 +25,7 @@ export default function Home() {
 
         {/* Deuxième carte */}
         <div className="col-12 col-lg-6">
-          <div className="card text-bg-info h-100 d-flex flex-column justify-content-start align-items-start p-4">
+          <div className="card text-bg-info h-100 d-flex flex-column justify-content-start align-items-start p-4 shadow border-0">
             <h1 className="text-light">Faites la différence aujourd’hui</h1>
             <p className="text-light border-5 border-start border-light ps-3">
               Peut fournir une aide financière d’urgence à quatre familles de réfugiés palestiniens
@@ -79,7 +80,7 @@ export default function Home() {
         </div>
 
         <div className="col-12 col-lg-6">
-          <div className="accordion" id="accordionExample">
+          <div className="accordion shadow border-0" id="accordionExample">
             <div className="accordion-item">
               <h2 className="accordion-header">
                 <button
@@ -168,70 +169,35 @@ export default function Home() {
 
         {/* Cartes supplémentaires */}
         <div className="col-12 col-lg-6">
-          <div className="card my-5 bg-info text-white d-flex justify-content-center align-items-center">
-            <Image src="/tow.webp" alt="..." width={400}  />
-            <div className="card-body">
-              <h5 className="card-title">Urgence Gaza</h5>
-              <p className="card-text">
-                Faites un don pour envoyer une aide d’urgence aux familles déplacées
-              </p>
+          {[
+            { src: "/tow.webp", title: "Urgence Gaza", text: "Faites un don pour envoyer une aide d’urgence aux familles déplacées" },
+            { src: "/three.webp", title: "Protégeons l’éducation", text: "Pour Gaza : Votre soutien peut aider à protéger le droit à l’éducation" },
+            { src: "/four.webp", title: "Protégeons l’éducation", text: "Soutenez l’éducation des réfugiés palestiniens dans tous les domaines" },
+            { src: "/five.webp", title: "Zakat", text: "Donnez votre Zakat aujourd’hui. 100% va directement aux réfugiés palestiniens" }
+          ].map((card, idx) => (
+            <div key={idx} className="card my-4 bg-info text-white border-0 shadow overflow-hidden">
+              <div className="ratio ratio-16x9">
+                <Image src={card.src} alt={card.title} fill style={{ objectFit: "cover" }} />
+              </div>
+              <div className="card-body">
+                <h5 className="card-title fw-bold">{card.title}</h5>
+                <p className="card-text">{card.text}</p>
+              </div>
             </div>
-          </div>
-
-          <div className="card my-5 bg-info text-white d-flex justify-content-center align-items-center">
-            <Image src="/three.webp" alt="..." width={500} height={500} />
-            <div className="card-body">
-              <h5 className="card-title">Protégeons l’éducation</h5>
-              <p className="card-text">
-                Pour Gaza : Votre soutien peut aider à protéger le droit à l’éducation
-              </p>
-            </div>
-          </div>
-
-          <div className="card my-5 bg-info text-white d-flex justify-content-center align-items-center">
-            <Image
-              src="/four.webp"
-              className="card-img-top"
-              alt="..."
-              width={400}
-              
-            />
-            <div className="card-body">
-              <h5 className="card-title">Protégeons l’éducation</h5>
-              <p className="card-text">
-                Soutenez l’éducation des réfugiés palestiniens dans tous les domaines
-              </p>
-            </div>
-          </div>
-
-          <div className="card my-5 bg-info text-white d-flex justify-content-center align-items-center">
-            <Image
-              src="/five.webp"
-              className="card-img-top"
-              alt="..."
-              width={400}
-              
-            />
-            <div className="card-body">
-              <h5 className="card-title">Zakat</h5>
-              <p className="card-text text-dark">
-                Donnez votre Zakat aujourd’hui. 100% va directement aux réfugiés palestiniens
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
 
         {/* Logos */}
         <div className="col-12 col-lg-6">
           <div className="d-flex flex-wrap gap-3 justify-content-center align-items-center my-5">
-            <Image src="/11.svg" alt="..." width={25} height={25} />
-            <Image src="/2.svg" alt="..." width={25} height={25} />
-            <Image src="/1.svg" alt="..." width={50} height={50} />
-            <Image src="/4.svg" alt="..." width={50} height={50} />
-            <Image src="/5.svg" alt="..." width={50} height={50} />
-            <Image src="/6.svg" alt="..." width={50} height={50} />
-            <Image src="/7.svg" alt="..." width={50} height={50} />
-            <Image src="/8.svg" alt="..." width={50} height={50} />
+            <Image src="/11.svg" alt="..." width={40} height={40} />
+            <Image src="/2.svg" alt="..." width={40} height={40} />
+            <Image src="/1.svg" alt="..." width={60} height={60} />
+            <Image src="/4.svg" alt="..." width={60} height={60} />
+            <Image src="/5.svg" alt="..." width={60} height={60} />
+            <Image src="/6.svg" alt="..." width={60} height={60} />
+            <Image src="/7.svg" alt="..." width={60} height={60} />
+            <Image src="/8.svg" alt="..." width={60} height={60} />
           </div>
         </div>
       </div>
