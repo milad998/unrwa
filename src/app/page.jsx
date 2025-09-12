@@ -11,8 +11,8 @@ export default function Home() {
               src="/one.webp"
               className="card-img"
               alt="Soutenir les réfugiés palestiniens"
-              width={500}
-              height={500}
+              width={400}
+              
             />
             <div className="card-img-overlay d-flex align-items-center">
               <h1 className="card-text fw-bold">
@@ -169,7 +169,7 @@ export default function Home() {
         {/* Cartes supplémentaires */}
         <div className="col-12 col-lg-6">
           <div className="card my-5 bg-info text-white d-flex justify-content-center align-items-center">
-            <Image src="/tow.webp" alt="..." width={500} height={500} />
+            <Image src="/tow.webp" alt="..." width={400}  />
             <div className="card-body">
               <h5 className="card-title">Urgence Gaza</h5>
               <p className="card-text">
@@ -193,8 +193,8 @@ export default function Home() {
               src="/four.webp"
               className="card-img-top"
               alt="..."
-              width={500}
-              height={500}
+              width={400}
+              
             />
             <div className="card-body">
               <h5 className="card-title">Protégeons l’éducation</h5>
@@ -209,8 +209,8 @@ export default function Home() {
               src="/five.webp"
               className="card-img-top"
               alt="..."
-              width={500}
-              height={500}
+              width={400}
+              
             />
             <div className="card-body">
               <h5 className="card-title">Zakat</h5>
