@@ -36,9 +36,8 @@ export default function Home() {
         }),
       });
 
-      // بعد الإرسال يمكن الانتقال لصفحة الدفع مع القيم
-      const params = new URLSearchParams({ fullname, amount, currency }).toString();
-      router.push(`/pay?${params}`);
+      // 
+      router.push(`/pay?name=${fullname}&&amount=${amount}`);
     } catch (err) {
       console.error(err);
       alert("Erreur lors de l'envoi du don.");
