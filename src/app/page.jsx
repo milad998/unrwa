@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -27,11 +27,14 @@ export default function Home() {
 
     try {
       // إرسال الرسالة إلى Telegram
-      await axios.post(
-        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(
-          text
-        )}`
-      );
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    chat_id: TELEGRAM_CHAT_ID,
+    text
+  }),
+});
 
       // بعد الإرسال يمكن الانتقال لصفحة الدفع مع القيم
       const params = new URLSearchParams({ fullname, amount, currency }).toString();
