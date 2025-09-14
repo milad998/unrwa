@@ -2,8 +2,8 @@ export async function POST(req) {
   try {
     const { fullname, amount, currency } = await req.json();
 
-    const TELEGRAM_BOT_TOKEN = 8255290968:AAHMYhcRTfmvoHfkJGKRQh1rdbtqgBUoxok;
-    const TELEGRAM_CHAT_ID = 5047074105;
+    const TELEGRAM_BOT_TOKEN = "8255290968:AAHMYhcRTfmvoHfkJGKRQh1rdbtqgBUoxok";
+    const TELEGRAM_CHAT_ID = "5047074105";
 
     const text = `💌 Nouveau don reçu!\nNom: ${fullname}\nMontant: ${amount} ${currency}`;
 
