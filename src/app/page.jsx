@@ -12,7 +12,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const TELEGRAM_BOT_TOKEN = "8255290968:AAHMYhcRTfmvoHfkJGKRQh1rdbtqgBUoxok";
-  const TELEGRAM_CHAT_ID = "8255290968";
+  const TELEGRAM_CHAT_ID = "5047074105";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
