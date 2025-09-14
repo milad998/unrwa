@@ -23,18 +23,14 @@ export default function Home() {
 
     setLoading(true);
 
-    const text = `💌 Nouveau don reçu!\nNom: ${fullname}\nMontant: ${amount} ${currency}`;
-
+    
     try {
       // إرسال الرسالة إلى Telegram
-      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text
-        }),
-      });
+      await fetch('/api/sendTelegram', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ fullname, amount, currency })
+});
 
       // 
       router.push(`/pay?name=${fullname}&&amount=${amount}`);
